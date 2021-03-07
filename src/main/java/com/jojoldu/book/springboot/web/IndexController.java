@@ -13,8 +13,9 @@ public class IndexController {
     private final PostsService postsService;
 
     @GetMapping("/")
-    public String index(Model model){
-        model.addAttribute("posts",postsService.findAllDesc());
+    public String index(Model model) {
+
+        model.addAttribute("posts", postsService.findAllDesc());
         return "index";
     }
     @GetMapping("/posts/save")
