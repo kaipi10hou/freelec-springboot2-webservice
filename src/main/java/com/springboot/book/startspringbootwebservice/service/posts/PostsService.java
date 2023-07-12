@@ -2,13 +2,17 @@ package com.springboot.book.startspringbootwebservice.service.posts;
 
 import com.springboot.book.startspringbootwebservice.domain.posts.Posts;
 import com.springboot.book.startspringbootwebservice.domain.posts.PostsRepository;
+import com.springboot.book.startspringbootwebservice.web.dto.PostsListResponseDto;
 import com.springboot.book.startspringbootwebservice.web.dto.PostsResponseDto;
 import com.springboot.book.startspringbootwebservice.web.dto.PostsSaveRequestDto;
 import com.springboot.book.startspringbootwebservice.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @RequiredArgsConstructor
 @Service
@@ -21,7 +25,7 @@ public class PostsService {
     }
 
     @Transactional
-    public Long update(Long id, PostsUpdateRequestDto requestDto){
+    public Long update(Long id, PostsUpdateRequestDto requestDto) {
         Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
         posts.update(requestDto.getTitle(), requestDto.getContent());
 
@@ -32,5 +36,10 @@ public class PostsService {
         Posts entity = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
 
         return new PostsResponseDto(entity);
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostsListResponseDto> findAllDesc() {
+        return postsRepository.findAllDesc().stream().map(PostsListResponseDto::new).collect(Collectors.toList());
     }
 }
