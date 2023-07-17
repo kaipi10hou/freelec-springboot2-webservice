@@ -17,6 +17,10 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
 
     private final HttpSession httpSession;
 
+    /*
+    supprotsParameter값이 true면 resolveArgument가 실행된다.
+    resolveArgument는 httpSession에서 user값을 가져와서 셋팅하는데 이건 IndexController에 설정해 놓은 @LoginUser에 들어가게 되는 것 같다.
+     */
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         boolean isLoginUserAnnotation = parameter.getParameterAnnotation(LoginUser.class) != null;
