@@ -41,3 +41,5 @@ dependencies {
     testCompile('org.springframework.security:spring-security-test')
     compile('org.mariadb.jdbc:mariadb-java-client')
 }
+
+version '1.0.1-SNAPSHOT-'+new Date().format("yyyyMMddHHmmss")
